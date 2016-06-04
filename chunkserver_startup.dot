@@ -1,0 +1,13 @@
+digraph G {
+	main->"sChunkServerMain.Run()";
+	"sChunkServerMain.Run()"->"sRestarter.Init()";
+	"sChunkServerMain.Run()"->"MdStream::Init()";
+	"sChunkServerMain.Run()"->"gMetaServerSM.SetMetaInfo()";
+	"sChunkServerMain.Run()"->"gChunkServer.Init()";
+	"sChunkServerMain.Run()"->"gChunkServer.MainLoop()";
+
+	"gChunkServer.Init()"->"gClientManager.BindAcceptor()";
+	"gClientManager.BindAcceptor()"->"new Acceptor(,ClientManager,)"
+	"new Acceptor(,ClientManager,)"->"SET_HANDLER"
+	"gClientManager.BindAcceptor()"->"ClientThread::CreateThreads()"
+}

@@ -1,0 +1,14 @@
+digraph G {
+	"main()"->"MetaServer::Run()";
+	"MetaServer::Run()"->"libkfsio::InitGlobals()";
+	"MetaServer::Run()"->"MdStream::Init()";
+	"MetaServer::Run()"->"SslFilter::Initialize()";
+	"MetaServer::Run()"->"MsgLogger::Init()";
+	"MetaServer::Run()"->"sInstance.Startup()";
+
+	"sInstance.Startup()"->"gNetDispatch.Bind()";
+	"sInstance.Startup()"->"gNetDispatch.Start()";
+
+	"gNetDispatch.Bind()"->"new Acceptor(,ClientManager::Impl,)";
+	"new Acceptor(,ClientManager::Impl,)"->"SET_HANDLER(this, &Acceptor::RecvConnection)";
+}

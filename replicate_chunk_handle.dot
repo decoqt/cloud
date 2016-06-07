@@ -1,0 +1,35 @@
+digraph G {
+"ReplicateChunkOp::Execute()"->" Replicator::Run(this)";
+"Replicator::Run(this)"->"impl = RSReplicatorImpl::Create(op, token, tokenLen, key, keyLen)";
+"Replicator::Run(this)"->"impl->Run()"->"ReplicatorImpl::Run()"->"RSReplicatorImpl::Start()";
+"RSReplicatorImpl::Start()"->"Enqueue(kStart)";
+
+"Enqueue(kStart)"->"RSReplicatorEntry::Enqueue()"->"Wakeup()"->"dispatch_start()"->"Handle()";
+"Enqueue(kStart)"->"Handle()";
+
+"Handle()"->"HandleStart()"->"HandleStart()";
+
+"HandleStart()"->"mReader.Open()";
+"mReader.Open()"->"mImpl.Open()"->"Striper::Create()"->"RSStriperCreate()"->"RSReadStriper::Create()";
+"RSReadStriper::Create()"->"Validate()"
+"RSReadStriper::Create()"->"ECMethod::FindDecoder()"
+"RSReadStriper::Create()"->"new RSReadStriper()"->"Requests::Init()";
+
+"HandleStart()"->"HandleCompletion()"->"HandleStartDone()";
+"HandleStartDone()"->"gChunkManager.AllocChunk()";
+"HandleStartDone()"->"RSReplicatorImpl::Read()"->"Enqueue(kRead)"->"HandleRead()";
+"HandleRead()"->"mReader.Read()"->"mImpl.Read()"->"StartRead()";
+
+"StartRead()"->"mOffset += theRet";
+"StartRead()"->"QueueRead()"->"RSReadStriper::process()"->"RecoverChunk()";
+
+			
+"RecoverChunk()"->"GetRequest()"->"Request::Create()";
+"RecoverChunk()"->"QueueRequest(theRequest)";
+"RecoverChunk()"->"Read()"->"request::Read()";
+
+"HandleRead()"->"HandleCompletion()"->"HandleReadDone()"->"SET_HANDLER(this, &ReplicatorImpl::HandleWriteDone)";
+"HandleReadDone()"->"gChunkManager.WriteChunk"
+"HandleReadDone()"->"HandleWriteDone()"->"Read()"
+
+}

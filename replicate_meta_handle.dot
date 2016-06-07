@@ -1,0 +1,16 @@
+digraph G {
+"gLayoutManager.ChunkReplicationChecker()"->"InitCheckAllChunks()";
+"gLayoutManager.ChunkReplicationChecker()"->"recoveryInfo->offset  = chunk->offset";
+"gLayoutManager.ChunkReplicationChecker()"->"HandoutChunkReplicationWork()";
+
+"InitCheckAllChunks()"->"mChunkToServerMap.First(CSMap::Entry::kStateNone)";
+
+"HandoutChunkReplicationWork()"->"ReplicateChunk()";
+
+"ReplicateChunk()"->"ChunkServer::ReplicateChunk()";
+
+"ChunkServer::ReplicateChunk()"->"r=new MetaChunkReplicate()";
+"ChunkServer::ReplicateChunk()"->"ChunkServer::Enqueue()";
+
+"ChunkServer::Enqueue()"->"MetaChunkReplicate::request(ostream& os)";
+}
